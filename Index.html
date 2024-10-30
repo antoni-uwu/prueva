@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            transition: opacity 0.5s ease; /* Transición para el cambio de contenido */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px; /* Ancho máximo */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input {
+            padding: 12px;
+            width: calc(100% - 24px);
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 10px;
+            border: none;
+            background-color: #2c3e50; /* Color del botón */
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Estilos de los globos */
+        .balloon {
+            position: absolute;
+            bottom: -150px; /* Comienza fuera de la vista */
+            width: 50px; /* Tamaño del globo */
+            height: 70px; /* Tamaño del globo */
+            border-radius: 50% / 100%; /* Forma redondeada */
+            animation-duration: 3s; /* Duración de la animación */
+        }
+
+        /* Diferentes colores para los globos */
+        .balloon:nth-child(1) { 
+          left: calc(10%); 
+          background-color: #FF5733; 
+          animation-name: float1; 
+          animation-delay: .5s; 
+        }
+        
+        .balloon:nth-child(2) { 
+          left: calc(30%); 
+          background-color: #33FF57; 
+          animation-name: float2; 
+          animation-delay: .7s; 
+        }
+        
+        .balloon:nth-child(3) { 
+          left: calc(50%); 
+          background-color: #3357FF; 
+          animation-name: float3; 
+          animation-delay: .9s; 
+        }
+        
+        .balloon:nth-child(4) { 
+          left: calc(70%); 
+          background-color: #F1C40F; 
+          animation-name: float4; 
+          animation-delay: .6s; 
+        }
+        
+        .balloon:nth-child(5) { 
+          left: calc(90%); 
+          background-color: #9B59B6; 
+          animation-name: float5; 
+          animation-delay: .8s; 
+        }
+
+        @keyframes float1 {
+          from { transform: translateY(0); }
+          to { transform: translateY(-400px); }
+        }
+
+        @keyframes float2 {
+          from { transform: translateY(0); }
+          to { transform: translateY(-450px); }
+        }
+
+        @keyframes float3 {
+          from { transform: translateY(0); }
+          to { transform: translateY(-500px); }
+        }
+
+        @keyframes float4 {
+          from { transform: translateY(0); }
+          to { transform: translateY(-420px); }
+        }
+
+        @keyframes float5 {
+          from { transform: translateY(0); }
+          to { transform: translateY(-480px); }
+        }
+
+        .message {
+          display:none; /* Inicialmente oculto */
+          font-size: 24px; 
+          margin-top: 20px; 
+          text-align:center; 
+          color:#333; 
+          opacity :0; 
+          transition : opacity .5s ease-in-out; 
+      }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="inputContainer">
+        <h1>¡Bienvenido!</h1>
+        <label for="nameInput">Introduce tu nombre:</label>
+        <input type="text" id="nameInput" placeholder="Tu nombre aquí" required>
+        <button id="submitButton">Enviar</button>
+    </div>
+
+    <div id="balloonContainer" style="display:none; text-align:center;">
+      <!-- Globos -->
+      <div class="balloon"></div>
+      <div class="balloon"></div>
+      <div class="balloon"></div>
+      <div class="balloon"></div>
+      <div class="balloon"></div>
+      <div class="message" id="welcomeMessage"></div> <!-- Mensaje de bienvenida -->
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function() {
+            const name = document.getElementById('nameInput').value.trim();
+            
+            if (name) {
+                // Ocultar el contenedor de entrada
+                const inputContainer = document.getElementById('inputContainer');
+                inputContainer.style.opacity = '0'; // Desvanecer
+                inputContainer.style.transition = 'opacity .5s ease'; // Transición
+
+                // Esperar a que se desvanezca antes de mostrar los globos
+                setTimeout(() => {
+                    inputContainer.style.display = 'none'; // Ocultar contenedor
+                    document.getElementById('balloonContainer').style.display = 'block'; // Mostrar contenedor de globos
+
+                    // Mostrar el mensaje después de que los globos se hayan elevado
+                    setTimeout(() => {
+                        const message = document.getElementById('welcomeMessage');
+                        message.textContent = `¡Hola, ${name}! Bienvenido a nuestra página.`;
+                        message.style.display = 'block'; // Muestra el mensaje
+                        message.style.opacity = '1'; // Asegura que sea visible
+                    }, 3000); // Espera a que terminen las animaciones de los globos (3000 ms)
+                }, 500); // Tiempo de desvanecimiento
+              
+                // Limpia el campo de entrada
+                document.getElementById('nameInput').value = '';
+                
+                // Opcionalmente puedes añadir un efecto al mostrar el mensaje
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                welcomeMessage.style.transition = 'all .5s ease-in-out';
+                
+                setTimeout(() => {
+                    welcomeMessage.style.opacity = '1';
+                }, 100);
+                
+            } else {
+                alert('Por favor, introduce tu nombre.');
+            }
+        });
+
+        // Permitir enviar con la tecla Enter
+        document.getElementById('nameInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('submitButton').click();
+            }
+        });
+    </script>
+
+</body>
+</html>
